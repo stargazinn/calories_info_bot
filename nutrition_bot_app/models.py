@@ -7,3 +7,12 @@ class FoodQuery(models.Model):
 
     def __str__(self):
         return f"{self.query} ({self.calories} cal)"
+
+
+class UsersFoodQuery(models.Model):
+    user_id = models.CharField(max_length=255)
+    query = models.CharField(max_length=255)
+    calories = models.FloatField()
+
+    def __str__(self):
+        return f"{self.query} ({self.calories} cal)"
