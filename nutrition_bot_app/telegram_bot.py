@@ -11,10 +11,13 @@ from telegram import Update, bot, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, CallbackQueryHandler, ConversationHandler
 from nutrition_bot_app.models import FoodQuery, UsersFoodQuery
 from deep_translator import GoogleTranslator
+from dotenv import load_dotenv
 
 
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv('TOKEN')
+print(TELEGRAM_BOT_TOKEN)
 
-TELEGRAM_BOT_TOKEN = '6191972563:AAGrQvoK15ch3jdIKteKbDzWbgIuskHEfak'
 
 WAITING_FOR_FOOD_NAME, WAITING_FOR_FOOD_PRODUCTS = range(2)
 
@@ -37,8 +40,8 @@ def main_menu():
         [KeyboardButton('Створити страву')],
         [KeyboardButton('Мої страви')],
         [KeyboardButton('Видалити страву')],
-        [KeyboardButton('Інфо')],
         [KeyboardButton('Відміна')],
+        [KeyboardButton('Інфо')],
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
     return reply_markup
@@ -159,7 +162,7 @@ def add_food_product(update: Update, context: CallbackContext):
 def info(update: Update, context: CallbackContext):
     update.message.reply_text("Можеш писати продукти в наступних форматах:\n"
                               "1. 2 банани - розрахувати калорійність двох бананів.\n"
-                              "2. 200г бананів - розрахувати кfалорійність 200г бананів.\n"
+                              "2. 200г бананів - розрахувати калорійність 200г бананів.\n"
                               "3. Банан - розрахувати калорійність 100г бананів (значення за замовчуванням).\n"
                               "Введіть команду /cancel щоб відмінити поточну дію.\n"
                               "Також я розумію англійську!")
